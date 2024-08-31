@@ -30,6 +30,8 @@ try:
 except KeyError:
     ALLOWED_HOSTS = []
 
+CSRF_TRUSTED_ORIGINS = ['https://glerk.nutmegranch.com']
+
 # auth
 AUTH_USER_MODEL = 'core.User'
 # authentication for django admin
