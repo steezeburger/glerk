@@ -12,8 +12,8 @@
     <div class="nav-container">
         {% if user.is_authenticated %}
             <div>
-                <a href="{% url 'book_list' %}" class="nav-button">View Book List</a>
-                <a href="{% url 'add_book' %}" class="nav-button">Add Book</a>
+                <a href="{% url 'book_list' %}" class="nav-button {% if request.resolver_match.url_name == 'book_list' %}active{% endif %}">View Book List</a>
+                <a href="{% url 'add_book' %}" class="nav-button {% if request.resolver_match.url_name == 'add_book' %}active{% endif %}">Add Book</a>
             </div>
             <a href="{% url 'logout' %}" class="nav-button logout-button">Logout</a>
         {% endif %}
