@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
@@ -14,7 +15,10 @@ def add_book(request):
         form = BookForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('add_book')  # Redirect to a list of books
+            return redirect('add_book')
+        else:
+            print(form.errors)
+            messages.error(request, 'There was an error with your submission. Please check the form and try again.')
     else:
         form = BookForm()
     return render(request, 'add_book.html', {'form': form})
@@ -25,9 +29,11 @@ def book_list(request):
     books = Book.objects.all().order_by('-id')
     return render(request, 'book_list.html', {'books': books})
 
+
 class CustomLoginView(LoginView):
     template_name = 'login.html'
     success_url = reverse_lazy('add_book')
+
 
 def logout_view(request):
     logout(request)

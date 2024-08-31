@@ -52,34 +52,34 @@ dcp-cleanup:
   docker volume rm {{projectName}}_postgres
 
 # creates docker volume for postgres data
-d-create-volumes:
+create-volumes:
   docker volume create --name={{projectName}}_postgres
 
 # build web image
-dcp-build-web:
+build-web:
   docker-compose build web
 
 # build db image
-dcp-build-db:
+build-db:
   docker-compose build db
 
 # build web and db images
-dcp-build-images: dcp-build-web dcp-build-db
+build-images: build-web build-db
 
 # run web and db containers
-dcp-up-all:
+up-all:
   docker-compose up -d
 
 # stop web and db containers
-dcp-stop-all:
+stop-all:
   docker-compose stop
 
 # migrate db
-dcp-migrate:
+migrate:
   just django-admin migrate
 
 # dump data from the db container
-dcp-dumpdata:
+dumpdata:
   just django-admin dumpdata \
   --natural-primary \
   --natural-foreign \
@@ -88,16 +88,17 @@ dcp-dumpdata:
   --indent 4
 
 # loads dev data into db
-dcp-load-dev-data:
+load-dev-data:
   just django-admin loaddata dev_data.json
 
 # run tests, excluding integration tests
-dcp-run-tests:
+test:
   docker-compose run --rm -w /code/app web \
     pytest -m "not integration" --cov=. --verbose
+alias t := test
 
 # generate a secret key for django
-dcp-generate-secret-key:
+generate-secret-key:
   docker-compose run --rm -w /code/app web \
     python -c \
     'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
