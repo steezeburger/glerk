@@ -3,7 +3,7 @@
 Glerk is a tool for cataloging and (eventually) digitizing your library of
 physical books. Use with a barcode scanner to quickly add books to your library.
 
-First time setup using `just`:
+## First time setup using `just`:
 ```sh
 just copy-env
 # copy and paste the output from this command into `.env` replacing `DJANGO_SECRET_KEY`
@@ -23,7 +23,7 @@ just dcp-up-all
 * `PIPENV_VENV_IN_PROJECT=1 pipenv install --dev --deploy`
 * `pipenv install some_package`
 
-## helpful scripts
+## Helpful scripts
 * `just dcp-run-tests`
   * runs all tests, except those decorated with `@pytest.mark.integration`
   * tests.py test_*.py *_test.py *_tests.py
