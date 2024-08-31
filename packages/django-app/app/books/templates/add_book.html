@@ -62,9 +62,9 @@
         barcodeInput.focus()
         barcodeInput.addEventListener('input', function () {
           const isbn = this.value
-          if (isbn.length === 11) {  // Assuming ISBN-10
-            fetchBookInfo(isbn)
-          }
+          {#if (isbn.length === 11) {  // Assuming ISBN-10#}
+          {#  fetchBookInfo(isbn)#}
+          {#}#}
           if (isbn.length === 13) {  // Assuming ISBN-13
             fetchBookInfo(isbn)
           }
