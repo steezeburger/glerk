@@ -1,11 +1,14 @@
 version: '3.8'
 
+name: glerk-docker
+
 volumes:
   glerk_postgres:
     external: true
 
 services:
   db:
+    container_name: glerk_db
     image: postgres:15.4
     env_file:
       - ./.env
@@ -14,6 +17,7 @@ services:
     volumes:
       - glerk_postgres:/var/lib/postgresql/data/
   web:
+    container_name: glerk_web
     build:
       context: .
       dockerfile: Dockerfile
