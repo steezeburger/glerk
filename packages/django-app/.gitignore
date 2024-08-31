@@ -1,0 +1,11 @@
+# data for management commands
+**/management/commands/data/
+
+# media files location
+app/media/
+
+# static files location
+app/static/
+
+# backups
+backups/
