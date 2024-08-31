@@ -142,11 +142,11 @@ django-admin *ARGS:
 
   # check env and user's confidence if we are not using local database
   checkenv
-  docker-compose run --rm -w /code/app web /code/app/manage.py "{{ARGS}}"
+  docker-compose run --rm -w /code/app web /code/app/manage.py {{ARGS}}
 
 # generate django admin file for the given app
 generate-admin app:
-  ./bin/dcp-django-admin.sh admin_generator {{app}} > app/{{app}}/admin_1.py
+  docker-compose run --rm -w /code/app web /code/app/manage.py admin_generator {{app}} > app/{{app}}/admin_1.py
 
 reload-docker-db *ARGS:
   ./utils/reload-docker-db.sh {{ARGS}}

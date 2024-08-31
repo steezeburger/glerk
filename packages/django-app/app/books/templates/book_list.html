@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List - Brutalist Book Cataloger</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            font-size: 3em;
+            text-transform: uppercase;
+            border-bottom: 5px solid #fff;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .book-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .book-item {
+            border: 3px solid #fff;
+            margin-bottom: 20px;
+            padding: 15px;
+            transition: background-color 0.3s;
+        }
+        .book-item:hover {
+            background-color: #ff00ff;
+        }
+        .book-title {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .book-info {
+            margin: 5px 0;
+        }
+        .add-book-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #000;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .add-book-link:hover {
+            background-color: #ff00ff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Book Catalog</h1>
+    <ul class="book-list">
+        {% for book in books %}
+            <li class="book-item">
+                <div class="book-title">{{ book.title }}</div>
+                <div class="book-info">Author: {{ book.author|default:"Unknown" }}</div>
+                <div class="book-info">ISBN: {{ book.isbn }}</div>
+                <div class="book-info">Publication Date: {{ book.publication_date|default:"Unknown" }}</div>
+            </li>
+        {% empty %}
+            <li class="book-item">No books in the catalog.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_book' %}" class="add-book-link">Add New Book</a>
+</body>
+</html>

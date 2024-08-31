@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django_extensions',
 
     # own
+    'books',
     'core',
 ]
 
@@ -150,3 +151,5 @@ MEDIA_ROOT = os.environ.get('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SITE_URL = os.environ.get('SITE_URL', '0.0.0.0')
+
+LOGIN_URL = 'login'  # This should match the name you gave to your login URL pattern

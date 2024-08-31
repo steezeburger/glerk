@@ -3,6 +3,10 @@
 Glerk is a tool for cataloging and (eventually) digitizing your library of
 physical books. Use with a barcode scanner to quickly add books to your library.
 
+## Screenshots
+![Add Book](./assets/add-book.png "Add Book")
+![Book List](./assets/book-list.png "Book List")
+
 ## First time setup using `just`:
 
 ```sh
