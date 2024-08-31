@@ -152,4 +152,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SITE_URL = os.environ.get('SITE_URL', '0.0.0.0')
 
-LOGIN_URL = 'login'  # This should match the name you gave to your login URL pattern
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'book_list'

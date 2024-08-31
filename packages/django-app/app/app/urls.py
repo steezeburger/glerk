@@ -22,6 +22,7 @@ from books.views import CustomLoginView, book_list
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('add-book/', views.add_book, name='add_book'),
+    path('', CustomLoginView.as_view(), name='login'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('books/', book_list, name='book_list'),
 ]
