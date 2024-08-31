@@ -25,7 +25,7 @@ create-json-backup location=default_backups_location:
 update-glerk:
   git pull origin main
   docker-compose build web
-  ./bin/dcp-django-admin.sh migrate
+  just django-admin migrate
   docker-compose stop web
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d web
 
@@ -34,11 +34,11 @@ init-dcp:
   docker volume create --name={{projectName}}_postgres
   docker-compose build
   docker-compose up -d db
-  ./bin/wait-for-it.sh localhost:5432 -- echo "db is up"
+  ./bin/wait-for-it.sh localhost:5453 -- echo "db is up"
 
 # create django admin superuser
 create-superuser:
-  ./bin/dcp-django-admin.sh createsuperuser
+  just django-admin createsuperuser
 
 # generate a secret key for pg crypto library
 generate-pg-crypto-secret-key:
@@ -76,11 +76,11 @@ dcp-stop-all:
 
 # migrate db
 dcp-migrate:
-  ./bin/dcp-django-admin.sh migrate
+  just django-admin migrate
 
 # dump data from the db container
 dcp-dumpdata:
-  ./bin/dcp-django-admin.sh dumpdata \
+  just django-admin dumpdata \
   --natural-primary \
   --natural-foreign \
   --exclude=admin.logentry \
@@ -89,7 +89,7 @@ dcp-dumpdata:
 
 # loads dev data into db
 dcp-load-dev-data:
-  ./bin/dcp-django-admin.sh loaddata dev_data.json
+  just django-admin loaddata dev_data.json
 
 # run tests, excluding integration tests
 dcp-run-tests:
