@@ -1,4 +1,7 @@
-# Django w/ Postgres starter
+# Glerk
+
+Glerk is a tool for cataloging and (eventually) digitizing your library of
+physical books. Use with a barcode scanner to quickly add books to your library.
 
 First time setup using `just`:
 ```sh
