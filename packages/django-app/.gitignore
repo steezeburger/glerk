@@ -9,3 +9,6 @@ app/static/
 
 # backups
 backups/
+
+# ai-digest
+codebase.md

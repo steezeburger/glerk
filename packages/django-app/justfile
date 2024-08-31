@@ -151,3 +151,6 @@ generate-admin app:
 
 reload-docker-db *ARGS:
   ./utils/reload-docker-db.sh {{ARGS}}
+
+ai-digest:
+  npx ai-digest --show-output-files

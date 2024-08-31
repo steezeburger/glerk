@@ -1,0 +1,10 @@
+# this file is used with ai-digest
+# https://github.com/khromov/ai-digest
+
+.venv
+.env
+LICENSE-*
+Pipfile.lock
+
+app/static/
+.pytest_cache/
