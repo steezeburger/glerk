@@ -118,6 +118,10 @@ button[type="submit"]:hover {
 }
 
 /* Message Styles */
+.message.error {
+    color: #ff00ff;
+}
+
 .success-message {
     background-color: #ff00ff;
     color: #fff;

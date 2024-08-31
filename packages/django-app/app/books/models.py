@@ -13,6 +13,9 @@ class Book(UUIDModelMixin, SoftDeleteTimestampMixin, CRUDTimestampsMixin):
     # TODO - add author model. starting simple for now.
     author = models.CharField(max_length=255, null=True)
 
+    # save the whole json object
+    all_data = models.JSONField(null=True)
+
     class Meta:
         db_table = 'books'
         default_permissions = ()

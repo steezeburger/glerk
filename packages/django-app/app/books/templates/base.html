@@ -9,27 +9,45 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <div class="nav-container">
-        {% if user.is_authenticated %}
-            <div>
-                <a href="{% url 'book_list' %}" class="nav-button {% if request.resolver_match.url_name == 'book_list' %}active{% endif %}">View Book List</a>
-                <a href="{% url 'add_book' %}" class="nav-button {% if request.resolver_match.url_name == 'add_book' %}active{% endif %}">Add Book</a>
-            </div>
-            <a href="{% url 'logout' %}" class="nav-button logout-button">Logout</a>
-        {% endif %}
-    </div>
+<script>
+  function newErrorMessageElem(messages) {
+    const messagesContainer = document.createElement('div')
+    messagesContainer.className = 'messages'
 
-    <h1>{% block header %}Glerk - Book Cataloger{% endblock %}</h1>
+    messages.forEach(message => {
+      const messageDiv = document.createElement('div')
+      messageDiv.className = `message ${message.tags || ''}`
+      messageDiv.textContent = message.text
+      messagesContainer.appendChild(messageDiv)
+    })
 
-    {% if messages %}
-        {% for message in messages %}
-            <div class="success-message">{{ message }}</div>
-        {% endfor %}
+    return messagesContainer.outerHTML
+  }
+</script>
+<div class="nav-container">
+    {% if user.is_authenticated %}
+        <div>
+            <a href="{% url 'add_book' %}"
+               class="nav-button {% if request.resolver_match.url_name == 'add_book' %}active{% endif %}">Add Book</a>
+            <a href="{% url 'book_list' %}"
+               class="nav-button {% if request.resolver_match.url_name == 'book_list' %}active{% endif %}">View Book
+                List</a>
+        </div>
+        <a href="{% url 'logout' %}" class="nav-button logout-button">Logout</a>
     {% endif %}
+</div>
 
-    {% block content %}
-    {% endblock %}
+<h1>{% block header %}Glerk - Book Cataloger{% endblock %}</h1>
 
-    {% block extra_js %}{% endblock %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="success-message">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+{% block content %}
+{% endblock %}
+
+{% block extra_js %}{% endblock %}
 </body>
 </html>
