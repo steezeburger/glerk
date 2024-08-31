@@ -7,7 +7,7 @@ from common.models.uuid_mixin import UUIDModelMixin
 
 class Book(UUIDModelMixin, SoftDeleteTimestampMixin, CRUDTimestampsMixin):
     title = models.CharField(max_length=255)
-    isbn = models.CharField(max_length=13)
+    isbn = models.CharField(max_length=13, unique=True)
     publication_date = models.CharField(max_length=255, null=True)
     cover_url = models.URLField(null=True)
     # TODO - add author model. starting simple for now.
