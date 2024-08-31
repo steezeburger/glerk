@@ -1,26 +1,20 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book List</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    <h1>Book Catalog</h1>
-    <ul class="book-list">
-        {% for book in books %}
-            <li class="book-item">
-                <div class="book-title">{{ book.title }}</div>
-                <div class="book-info">Author: {{ book.author|default:"Unknown" }}</div>
-                <div class="book-info">ISBN: {{ book.isbn }}</div>
-                <div class="book-info">Publication Date: {{ book.publication_date|default:"Unknown" }}</div>
-            </li>
-        {% empty %}
-            <li class="book-item">No books in the catalog.</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'add_book' %}" class="add-book-link">Add New Book</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Book List - Glerk{% endblock %}
+
+{% block header %}Book Catalog{% endblock %}
+
+{% block content %}
+<ul class="book-list">
+    {% for book in books %}
+        <li class="book-item">
+            <div class="book-title">{{ book.title }}</div>
+            <div class="book-info">Author: {{ book.author|default:"Unknown" }}</div>
+            <div class="book-info">ISBN: {{ book.isbn }}</div>
+            <div class="book-info">Publication Date: {{ book.publication_date|default:"Unknown" }}</div>
+        </li>
+    {% empty %}
+        <li class="book-item">No books in the catalog.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
