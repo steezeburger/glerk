@@ -102,10 +102,51 @@ dcp-generate-secret-key:
     python -c \
     'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
 
-# django admin command
+# run shell commands in web container
+dcp-run *ARGS:
+  docker-compose run --rm web {{ARGS}}
+
+# execute shell commands in running web container
+dcp-exec *ARGS:
+  docker-compose exec web {{ARGS}}
+
+# run django admin command in web container
 django-admin *ARGS:
-  ./bin/dcp-django-admin.sh {{ARGS}}
+  #! /bin/bash
+  # proxy to execute `manage.py` (django-admin) commands in web container
+
+  function checkenv() {
+    # get db host envar from docker container
+    DB_HOST_ENVAR=$(docker-compose run --rm -w /code/app web env | grep POSTGRES_HOST)
+    DB_HOST=$(cut -d "=" -f2 <<< "$DB_HOST_ENVAR")
+    # bashism to trim newline
+    DB_HOST=${DB_HOST//[$'\t\r\n']}
+    if [ "$DB_HOST" != 'db' ] && [ "$DB_HOST" != '0.0.0.0' ] && [ "$DB_HOST" != 'localhost' ]
+    then
+      echo "You are running this command against the database at ${DB_HOST}!"
+      checkconfidence
+    else
+      echo "Running command against database at $DB_HOST..."
+    fi
+  }
+
+  function checkconfidence() {
+    read -r -p "Are you sure you want to continue? [y/N] " response
+    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
+    then
+      return
+    else
+      exit
+    fi
+  }
+
+  # check env and user's confidence if we are not using local database
+  checkenv
+  docker-compose run --rm -w /code/app web /code/app/manage.py "{{ARGS}}"
 
 # generate django admin file for the given app
 generate-admin app:
   ./bin/dcp-django-admin.sh admin_generator {{app}} > app/{{app}}/admin_1.py
+
+reload-docker-db *ARGS:
+  ./utils/reload-docker-db.sh {{ARGS}}
