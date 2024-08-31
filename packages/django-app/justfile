@@ -41,7 +41,7 @@ create-superuser:
   ./bin/dcp-django-admin.sh createsuperuser
 
 # generate a secret key for pg crypto library
-generate-pg-secret-key:
+generate-pg-crypto-secret-key:
   # generate random 32 digit lowercase string
   openssl rand -hex 16
 
