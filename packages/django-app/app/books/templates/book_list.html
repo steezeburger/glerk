@@ -8,10 +8,17 @@
 <ul class="book-list">
     {% for book in books %}
         <li class="book-item">
-            <div class="book-title">{{ book.title }}</div>
-            <div class="book-info">Author: {{ book.author|default:"Unknown" }}</div>
-            <div class="book-info">ISBN: {{ book.isbn }}</div>
-            <div class="book-info">Publication Date: {{ book.publication_date|default:"Unknown" }}</div>
+            <div class="book-details">
+                <div class="book-title">{{ book.title }}</div>
+                <div class="book-info">Author: {{ book.author|default:"Unknown" }}</div>
+                <div class="book-info">ISBN: {{ book.isbn }}</div>
+                <div class="book-info">Publication Date: {{ book.publication_date|default:"Unknown" }}</div>
+            </div>
+            {% if book.cover_url %}
+                <div class="book-cover">
+                    <img src="{{ book.cover_url }}" alt="Cover of {{ book.title }}" class="book-cover-image">
+                </div>
+            {% endif %}
         </li>
     {% empty %}
         <li class="book-item">No books in the catalog.</li>

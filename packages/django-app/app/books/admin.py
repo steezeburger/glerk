@@ -17,6 +17,11 @@ class BookAdmin(admin.ModelAdmin):
         'publication_date',
         'author',
     )
+    readonly_fields = (
+        'created_at',
+        'deleted_at',
+        'modified_at',
+    )
     list_filter = (
         'created_at',
         'modified_at',

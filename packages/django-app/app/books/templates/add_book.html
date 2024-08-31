@@ -5,51 +5,91 @@
 {% block header %}Add Book{% endblock %}
 
 {% block content %}
-<form method="post" id="add-book-form">
-    {% csrf_token %}
-    {% for field in form %}
-        <label for="{{ field.id_for_label }}">
-            {{ field.label }}
-        </label>
-        <input type="{{ field.field.widget.input_type }}"
-               name="{{ field.name }}"
-               id="{{ field.id_for_label }}"
-               {% if field.field.required %}required{% endif %}>
-    {% endfor %}
-    <label for="barcode-input">Scan Barcode</label>
-    <input type="text"
-           id="barcode-input"
-           placeholder="SCAN ISBN HERE">
-    <button type="submit">ADD BOOK TO DATABASE</button>
-</form>
+<div class="book-form-container">
+    <div class="form-column">
+        <form method="post" id="add-book-form">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+                    <input type="{{ field.field.widget.input_type }}"
+                           name="{{ field.name }}"
+                           id="{{ field.id_for_label }}"
+                           {% if field.field.required %}required{% endif %}>
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <label for="barcode-input">Scan Barcode</label>
+                <input type="text"
+                       id="barcode-input"
+                       placeholder="SCAN ISBN HERE">
+            </div>
+            <button type="submit">ADD BOOK TO DATABASE</button>
+        </form>
+    </div>
+    <div class="image-column">
+        <div id="cover-container" class="d-none">
+            <img id="cover-image" alt="Book Cover">
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const barcodeInput = document.getElementById('barcode-input');
+        const coverContainer = document.getElementById('cover-container');
+        const coverImage = document.getElementById('cover-image');
+
         barcodeInput.focus();
-        barcodeInput.addEventListener('input', function() {
+        barcodeInput.addEventListener('input', function () {
             const isbn = this.value;
             if (isbn.length === 13) {  // Assuming ISBN-13
                 fetchBookInfo(isbn);
             }
         });
-    });
 
-    function fetchBookInfo(isbn) {
-        fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`)
-            .then(response => response.json())
-            .then(data => {
-                const bookData = data[`ISBN:${isbn}`];
-                if (bookData) {
-                    document.getElementById('id_title').value = bookData.title;
-                    document.getElementById('id_author').value = bookData.authors ? bookData.authors[0].name : '';
-                    document.getElementById('id_isbn').value = isbn;
-                    document.getElementById('id_publication_date').value = bookData.publish_date;
-                }
-            })
-            .catch(error => console.error('Error fetching book data:', error));
-    }
+        function fetchBookInfo(isbn) {
+            fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`)
+                .then(response => response.json())
+                .then(data => {
+                    const bookData = data[`ISBN:${isbn}`];
+                    if (bookData) {
+                        document.getElementById('id_title').value = bookData.title || '';
+                        document.getElementById('id_author').value = bookData.authors ? bookData.authors[0].name : '';
+                        document.getElementById('id_isbn').value = isbn;
+                        document.getElementById('id_publication_date').value = bookData.publish_date || '';
+
+                        // Construct and set the cover image URL
+                        const coverUrl = `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`;
+                        document.getElementById('id_cover_url').value = coverUrl;
+
+                        // Check if the image exists before displaying
+                        checkImageExists(coverUrl, function(exists) {
+                            if (exists) {
+                                coverImage.src = coverUrl;
+                                coverContainer.classList.remove('d-none');
+                            } else {
+                                coverContainer.classList.add('d-none');
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching book data:', error);
+                    coverContainer.classList.add('d-none');
+                });
+        }
+
+        function checkImageExists(url, callback) {
+            const img = new Image();
+            img.onload = function() { callback(true); };
+            img.onerror = function() { callback(false); };
+            img.src = url;
+        }
+    });
 </script>
 {% endblock %}

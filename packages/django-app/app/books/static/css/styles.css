@@ -9,23 +9,23 @@ body {
 }
 
 h1 {
-    font-size: 3em;
+    font-size: 2em;
     text-transform: uppercase;
     border-bottom: 5px solid #fff;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
+    padding: 5px 0;
+    margin: 0;
 }
 
 /* Navigation Styles */
 .nav-container {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 }
 
 .nav-button {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 8px 15px;
     background-color: #fff;
     color: #000;
     text-decoration: none;
@@ -139,10 +139,39 @@ button[type="submit"]:hover {
     margin-bottom: 20px;
     padding: 15px;
     transition: background-color 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .book-item:hover {
     background-color: #ff00ff;
+}
+
+.book-details {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.book-cover {
+    flex: 0 0 150px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.book-cover-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 2px solid #fff;
+    transition: transform 0.3s;
+}
+
+.book-item:hover .book-cover-image {
+    transform: scale(1.05);
 }
 
 .book-title {
@@ -155,19 +184,73 @@ button[type="submit"]:hover {
     margin: 5px 0;
 }
 
-.add-book-link {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #fff;
-    color: #000;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: bold;
-    transition: background-color 0.3s;
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .book-item {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
+
+    .book-cover {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .book-details {
+        width: 100%;
+        padding-right: 0;
+    }
 }
 
-.add-book-link:hover {
-    background-color: #ff00ff;
+/* styles for book form and cover image */
+.small-label {
+    font-size: 0.875rem;
+    font-weight: bold;
     color: #fff;
+    text-transform: uppercase;
+}
+
+#cover-container {
+    position: sticky;
+    top: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+#cover-image {
+    max-width: 100%;
+    height: auto;
+    border: 3px solid #fff;
+}
+
+.book-form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-column {
+    flex: 1;
+    min-width: 300px;
+}
+
+.image-column {
+    flex: 0 0 300px;
+    margin-left: 20px;
+}
+
+@media (max-width: 768px) {
+    .book-form-container {
+        flex-direction: column;
+    }
+
+    .image-column {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+}
+
+/* Utility class */
+.d-none {
+    display: none;
 }
