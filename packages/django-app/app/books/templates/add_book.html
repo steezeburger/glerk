@@ -1,98 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Book - Brutalist Edition</title>
-    <style>
-        body {
-            font-family: monospace;
-            background-color: #000;
-            color: #fff;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        h1 {
-            font-size: 3em;
-            text-transform: uppercase;
-            border-bottom: 5px solid #fff;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .nav-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #fff;
-            color: #000;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: bold;
-            margin-bottom: 20px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .nav-button:hover {
-            background-color: #ff00ff;
-            color: #fff;
-        }
-        form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        label {
-            display: block;
-            margin-top: 20px;
-            font-size: 1.2em;
-            text-transform: uppercase;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 3px solid #fff;
-            background-color: #000;
-            color: #fff;
-            font-family: monospace;
-            font-size: 1em;
-        }
-        input:focus {
-            outline: none;
-            border-color: #ff00ff;
-        }
-        button {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin-top: 30px;
-            background-color: #fff;
-            color: #000;
-            border: none;
-            font-family: monospace;
-            font-size: 1.2em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        button:hover {
-            background-color: #ff00ff;
-            color: #fff;
-        }
-        #barcode-input {
-            border-color: #ff00ff;
-        }
-        .success-message {
-            background-color: #ff00ff;
-            color: #fff;
-            padding: 10px;
-            margin-top: 20px;
-            text-align: center;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-    </style>
+    <title>Add Book</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <a href="{% url 'book_list' %}" class="nav-button">View Book List</a>
+    <div class="nav-container">
+        <a href="{% url 'book_list' %}" class="nav-button">View Book List</a>
+        <a href="{% url 'logout' %}" class="nav-button logout-button">Logout</a>
+    </div>
     <h1>Add Book</h1>
     {% if messages %}
         {% for message in messages %}

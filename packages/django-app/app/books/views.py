@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
@@ -27,3 +28,7 @@ def book_list(request):
 class CustomLoginView(LoginView):
     template_name = 'login.html'
     success_url = reverse_lazy('add_book')
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
